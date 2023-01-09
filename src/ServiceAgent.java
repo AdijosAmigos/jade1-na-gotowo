@@ -21,9 +21,17 @@ public class ServiceAgent extends Agent {
 		ServiceDescription sd2 = new ServiceDescription();
 		sd2.setType("answers");
 		sd2.setName("dictionary");
+		//service no 3
+
+		//TODO: stworzenie nowego serwisu
+		ServiceDescription sd3 = new ServiceDescription();
+		sd3.setType("answers");
+		sd3.setName("polspa");
 		//add them all
+		//TODO: dodanie serwisu
 		dfad.addServices(sd1);
 		dfad.addServices(sd2);
+		dfad.addServices(sd3);
 		try {
 			DFService.register(this,dfad);
 		} catch (FIPAException ex) {
@@ -32,6 +40,8 @@ public class ServiceAgent extends Agent {
 		
 		addBehaviour(new WordnetCyclicBehaviour(this));
 		addBehaviour(new DictionaryCyclicBehaviour(this));
+		//TODO: dodanie zachowania nowego słownika (tlumaczenie)
+		addBehaviour(new NewDictionaryCyclicBehaviour(this));
 		//doDelete();
 	}
 	protected void takeDown() {
@@ -81,8 +91,7 @@ public class ServiceAgent extends Agent {
 	}
 }
 
-class WordnetCyclicBehaviour extends CyclicBehaviour
-{
+class WordnetCyclicBehaviour extends CyclicBehaviour {
 	ServiceAgent agent;
 	public WordnetCyclicBehaviour(ServiceAgent agent)
 	{
@@ -117,8 +126,7 @@ class WordnetCyclicBehaviour extends CyclicBehaviour
 	}
 }
 
-class DictionaryCyclicBehaviour extends CyclicBehaviour
-{
+class DictionaryCyclicBehaviour extends CyclicBehaviour {
 	ServiceAgent agent;
 	public DictionaryCyclicBehaviour(ServiceAgent agent)
 	{
@@ -142,6 +150,42 @@ class DictionaryCyclicBehaviour extends CyclicBehaviour
 			try
 			{
 				response = agent.makeRequest("english", content);
+			}
+			catch (NumberFormatException ex)
+			{
+				response = ex.getMessage();
+			}
+			reply.setContent(response);
+			agent.send(reply);
+		}
+	}
+}
+
+//TODO: dodanie nowego klasy z nowym slownikiem
+class NewDictionaryCyclicBehaviour extends CyclicBehaviour {
+	ServiceAgent agent;
+	public NewDictionaryCyclicBehaviour(ServiceAgent agent)
+	{
+		this.agent = agent;
+	}
+	public void action()
+	{
+		MessageTemplate template = MessageTemplate.MatchOntology("polspa");
+		ACLMessage message = agent.receive(template);
+		if (message == null)
+		{
+			block();
+		}
+		else
+		{
+			//process the incoming message
+			String content = message.getContent();
+			ACLMessage reply = message.createReply();
+			reply.setPerformative(ACLMessage.INFORM);
+			String response = "";
+			try
+			{
+				response = agent.makeRequest("fd-pol-spa", content);
 			}
 			catch (NumberFormatException ex)
 			{
