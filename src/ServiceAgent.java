@@ -20,7 +20,7 @@ public class ServiceAgent extends Agent {
 		//service no 2
 		ServiceDescription sd2 = new ServiceDescription();
 		sd2.setType("answers");
-    sd2.setName("notused")
+    	sd2.setName("notused");
 		//TODO: stworzenie nowego serwisu
 		ServiceDescription sd3 = new ServiceDescription();
 		sd3.setType("answers");
