@@ -117,4 +117,3 @@ class DictionaryCyclicBehaviour extends CyclicBehaviour
 		}
 	}
 }
-
