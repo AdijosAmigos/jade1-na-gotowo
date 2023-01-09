@@ -20,9 +20,7 @@ public class ServiceAgent extends Agent {
 		//service no 2
 		ServiceDescription sd2 = new ServiceDescription();
 		sd2.setType("answers");
-		sd2.setName("dictionary");
-		//service no 3
-
+    sd2.setName("notused")
 		//TODO: stworzenie nowego serwisu
 		ServiceDescription sd3 = new ServiceDescription();
 		sd3.setType("answers");
@@ -134,7 +132,7 @@ class DictionaryCyclicBehaviour extends CyclicBehaviour {
 	}
 	public void action()
 	{
-		MessageTemplate template = MessageTemplate.MatchOntology("dictionary");
+		MessageTemplate template = MessageTemplate.MatchOntology("polspa");
 		ACLMessage message = agent.receive(template);
 		if (message == null)
 		{
@@ -149,7 +147,7 @@ class DictionaryCyclicBehaviour extends CyclicBehaviour {
 			String response = "";
 			try
 			{
-				response = agent.makeRequest("english", content);
+				response = agent.makeRequest("fd-pol-spa", content);
 			}
 			catch (NumberFormatException ex)
 			{
