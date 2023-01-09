@@ -21,7 +21,6 @@
     <java fork="true" classpath="jade/lib/jade.jar;build" classname="jade.Boot">
       <arg value="-gui" />
       <arg value="UserAgent:jadelab1.MyAgent;BrandNewAgent:jadelab1.BrandNewAgent;ServiceAgent:jadelab1.ServiceAgent" />
-      <arg value="UserAgent:jadelab1.MyAgent;MateuszAgent:jadelab1.MateuszAgent;ServiceAgent:jadelab1.ServiceAgent" />
     </java>
   </target>
 </project>
